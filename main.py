@@ -1,7 +1,9 @@
+from random import choice
 
 en_alphabet = [chr(i) for i in range(97, 123)]
 ru_alphabet = [chr(i) for i in range(1072, 1078)] + ['ё'] + [chr(i) for i in range(1078, 1104)]
-
+incor_direction = ['Похоже ты ввёл неверную цифру, прочитай условие ещё раз.', 'Ой, не то. Попробуй снова',
+                   'Введённые тобой данные не соответствуют тз. Следуй условию.']
 def en_coding(txt, k):
     res = ''
     for i in range(len(txt)):
@@ -53,10 +55,16 @@ def ru_decoding(txt, k):
         else:
             res += txt[i]
     return res
+
+def valid_direction(direction):
+    return direction in [1, 0]
 def cesar():
     print('-' * 30, 'Добро пожаловать в шифр Цезаря', '-' * 30, sep = '\n')
 
     direction = int(input('Введи 1 если хочешь зашифровать текст, или 0, если хочешь его расшифровать\n'))
+    if not valid_direction(direction):
+        error = choice(incor_direction)
+        return error
     k = int(input('Введи шаг шифра\n'))
 
     txt = input('Введи текст\n')
@@ -69,12 +77,12 @@ def cesar():
         res = ru_coding(txt, k)
     else:
         res = ru_decoding(txt, k)
-    print(res)
+    return res
 
 while True:
-    cesar()
+    print(cesar())
     answer = input('Если хочешь повторить цикл напиши Да, иначе - Нет\n')
     if answer == 'Да':
-        cesar()
+        print(cesar())
     else:
         break
